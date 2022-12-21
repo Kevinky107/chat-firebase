@@ -1,0 +1,8 @@
+{
+  "name": "Chat cerdito",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "516dfe09"
+}

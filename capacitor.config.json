@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Chat cerdito",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
