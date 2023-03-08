@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-item
+    ><ion-label>Bienvenido al Chat</ion-label>
+    <ion-button (click)="logOut()" fill="clear" class="logout-button"
+      ><ion-icon size="small" name="log-out-outline"></ion-icon
+    ></ion-button>
+  </ion-item>
+</ion-header>
+<ion-content>
+  <ion-list id="mensajes"> </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-input
+      [formControl]="mensajeInput"
+      (keyup.enter)="sendMensaje()"
+      type="text"
+      id="text"
+    ></ion-input>
+    <ion-button (click)="sendMensaje()" [disabled]="!mensajeInput.valid"
+      ><ion-icon name="arrow-forward-circle-outline"></ion-icon
+    ></ion-button>
+  </ion-item>
+</ion-footer>

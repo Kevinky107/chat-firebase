@@ -1,0 +1,39 @@
+.usuario{
+    font-size: 10px !important;
+}
+
+body{
+    height: 100%;
+    width: auto;
+}
+
+ion-list{
+    display: contents;
+}
+
+ion-content{
+    display: flex;
+    text-align: center;
+}
+
+ion-list{
+    background-color: rgba(21, 21, 21, 0);
+}
+
+ion-label{
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.item-background-color{
+    --ion-item-background:#1f1f1f00;
+}
+
+ion-item::part(native){
+    background: #1f1f1f00;
+}
+
+:host{
+    ion-item{
+        --highlight-color-valid: pink;
+    }
+}
