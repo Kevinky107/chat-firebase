@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -13,6 +13,7 @@ import { ChatModule } from './chat/chat.module';
 import { DatabaseModule } from '@angular/fire/database';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginModule } from './login/login.module';
+import { AuthGuard } from './services/guard';
 
 
 @NgModule({
@@ -27,9 +28,9 @@ import { LoginModule } from './login/login.module';
     IonicModule.forRoot(), 
     AppRoutingModule, 
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

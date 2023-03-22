@@ -1,5 +1,19 @@
-.usuario{
-    font-size: 10px !important;
+.izquierda .usuario{
+    font-size: 10px;
+    color:rgb(137, 42, 102);
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.derecha .usuario{
+    font-size: 10px;
+    color:pink;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.texto{
+    color:rgb(218, 218, 218);
 }
 
 body{
@@ -16,8 +30,15 @@ ion-content{
     text-align: center;
 }
 
+.contenedor{
+    display: flex;
+    flex-direction: column;
+}
+
 ion-list{
     background-color: rgba(21, 21, 21, 0);
+    margin-top: auto;
+    margin-bottom: 0;
 }
 
 ion-label{
@@ -36,4 +57,40 @@ ion-item::part(native){
     ion-item{
         --highlight-color-valid: pink;
     }
+}
+
+.derecha{
+    text-align: right;
+}
+
+.izquierda{
+    text-align: left;
+}
+
+.mensaje{
+    background-color: rgb(30, 30, 30);
+    
+}
+
+.mensaje:hover{
+    background-color: rgb(49, 47, 49);
+}
+
+.izquierda .burbuja{
+    display:inline-block;
+    background-color: rgb(137, 42, 102);
+    padding: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 40px;
+    box-shadow: 2px, 2px, 1px, black;
+}
+
+.derecha .burbuja{
+    display:inline-block;
+    background-color: rgb(147, 82, 119);
+    padding: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 40px;
 }

@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MensajesService } from '../mensajes.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mensaje } from '../interfaces/mensaje';
 import { FormControl, Validators } from '@angular/forms';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Geolocation } from '@capacitor/geolocation'
 
 @Component({
   selector: 'app-chat',
@@ -15,27 +15,54 @@ import { Router } from '@angular/router';
 export class ChatComponent implements OnInit {
   mensajes: Array<Mensaje> = [];
   mensajeInput = new FormControl('');
+  data: Array<Mensaje> = [];
+  index = 0;
+  user = localStorage.getItem("user")!.toString().replace(/['"]+/g, '');
+  location = '';
+  url = "https://maps.google.com/?q=";
+
 
   constructor(private servicioMensajes: MensajesService, public authS: AuthService) { 
+    Geolocation.getCurrentPosition().then(res => {
+      this.location = res.coords.latitude.toFixed(4).toString()+', '+res.coords.longitude.toFixed(4).toString();
+    });
     this.servicioMensajes.getMensajes().subscribe(m => {
       this.mensajes = m
-      this.mostrarMensajes();
+      this.loadMensaje();
     })
    }
 
   ngOnInit() {}
 
+  loadMensaje()
+  {
+    let idLastMessage = this.mensajes.length - this.index - 10;
+    let idFirstMessage = this.mensajes.length-1 - this.index;
+
+    if(idFirstMessage < 0)
+    {
+      idFirstMessage = 0;
+      console.log(idFirstMessage)
+      console.log(idLastMessage)
+    }
+
+    for(let i = idFirstMessage; i >= idLastMessage; i--)
+    {
+      if(this.mensajes[i] != null)
+        this.data.push(this.mensajes[i])
+    }
+  }
+
   sendMensaje()
   {
-    //const inp = document.getElementById('text');
-    const date = new Date().toString();
-    const user = localStorage.getItem("user")!.toString().replace(/['"]+/g, '');
+    const date = Date.now().toString();
     const text = this.mensajeInput.value;
-    
+
     const mensaje: Mensaje = {
-      user: user,
+      user: this.user,
       text: text,
-      date: date
+      date: date,
+      location: this.location
     }
 
     this.servicioMensajes.addMensaje(
@@ -43,27 +70,24 @@ export class ChatComponent implements OnInit {
     );
 
     this.mensajes.push(mensaje);
+    this.data.unshift(mensaje);
     this.mensajeInput.setValue('');
   }
 
-  mostrarMensajes()
-  {
-    const user = localStorage.getItem("user")!.toString().replace(/['"]+/g, '');
-    let lista = document.getElementById("mensajes") as HTMLElement;
-    lista.innerHTML = "";
-
-    this.mensajes.forEach(mensaje => {
-      let slot = '';
-      if(mensaje.user == user)
-        {slot = 'style="text-align: right"'}
-
-      lista.innerHTML += '<ion-item><ion-label '+slot+'><p class="usuario">'+ mensaje.user +'</p><p>' + mensaje.text+'</p></ion-label></ion-Item>';
-    });
-  }
+  @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
 
   onIonInfinite(ev: any) {
     setTimeout(() => {
-      (ev as InfiniteScrollCustomEvent).target.complete();
+      
+      if(this.data.length >= this.mensajes.length){
+        this.infiniteScroll?.complete();
+        this.infiniteScroll.disabled = true;
+        return;
+      }else{
+        this.index += 10;
+        this.loadMensaje();
+        this.infiniteScroll?.complete();
+      }
     }, 500);
   }
 

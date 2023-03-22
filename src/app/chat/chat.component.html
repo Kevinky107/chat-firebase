@@ -7,8 +7,18 @@
   </ion-item>
 </ion-header>
 <ion-content>
-  <ion-list id="mensajes"> </ion-list>
-
+  <div class="contenedor">
+    <ion-list>
+      <ion-item class="mensaje" lines="none" *ngFor="let mensaje of data" target="blank" href={{url+mensaje.location}}>
+        <ion-label [ngClass]="user == mensaje.user? 'derecha': 'izquierda'">
+          <p class="usuario">{{mensaje.user == user? "Yo" : mensaje.user}}</p>
+          <div class="burbuja">
+            <p class="texto">{{mensaje.text}}</p>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
   <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
