@@ -1,18 +1,13 @@
 .log-up{
     height: 35px;
-    background: rgb(53, 53, 53);
     text-align: center;
-}
-
-ion-img{
-    margin: 70px;
-    width: 30%;
 }
 
 .inicio-button{
     padding: 5px;
     border-radius: 14px;
     background-color: rgb(90, 82, 244);
+    color: white;
 }
 
 .log-out{
@@ -29,11 +24,27 @@ ion-icon{
     font-size: 24px;
 }
 
-ion-content{
-    display: flex;
-    text-align: center;
-}
-
 .img{
     background-color: rgba(0, 0, 0, 0);
+}
+
+.centro{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 10%;
+}
+
+.boton{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    padding-bottom: 2%;
 }

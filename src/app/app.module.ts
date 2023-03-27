@@ -14,6 +14,7 @@ import { DatabaseModule } from '@angular/fire/database';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginModule } from './login/login.module';
 import { AuthGuard } from './services/guard';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 @NgModule({
@@ -29,6 +30,12 @@ import { AuthGuard } from './services/guard';
     AppRoutingModule, 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, AuthGuard],
   bootstrap: [AppComponent],

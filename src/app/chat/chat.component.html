@@ -11,9 +11,9 @@
     <ion-list>
       <ion-item class="mensaje" lines="none" *ngFor="let mensaje of data" target="blank" href={{url+mensaje.location}}>
         <ion-label [ngClass]="user == mensaje.user? 'derecha': 'izquierda'">
-          <p class="usuario">{{mensaje.user == user? "Yo" : mensaje.user}}</p>
-          <div class="burbuja">
-            <p class="texto">{{mensaje.text}}</p>
+          <ion-text class="usuario">{{mensaje.user == user? "Yo" : mensaje.user}}</ion-text>
+          <br><div class="burbuja">
+            <ion-text class="texto ion-text-wrap">{{mensaje.text}}</ion-text>
           </div>
         </ion-label>
       </ion-item>

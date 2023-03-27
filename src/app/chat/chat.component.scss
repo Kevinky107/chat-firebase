@@ -14,6 +14,11 @@
 
 .texto{
     color:rgb(218, 218, 218);
+    display: flex;
+    max-width: 70%;
+    min-width: 40%;
+    word-wrap: break-word;
+    white-space: wrap;
 }
 
 body{
@@ -26,8 +31,13 @@ ion-list{
 }
 
 ion-content{
+    background-color: rgb(30, 30, 30);
     display: flex;
     text-align: center;
+}
+
+ion-content::part(native){
+    background: rgb(30, 30, 30);
 }
 
 .contenedor{
@@ -45,18 +55,17 @@ ion-label{
     background-color: rgba(0, 0, 0, 0);
 }
 
-.item-background-color{
-    --ion-item-background:#1f1f1f00;
-}
 
-ion-item::part(native){
-    background: #1f1f1f00;
+.contenedor ion-item::part(native){
+    background: var( --ion-color-primary-contrast);
 }
 
 :host{
     ion-item{
         --highlight-color-valid: pink;
     }
+
+    --background: rgb(30, 30, 30);
 }
 
 .derecha{
@@ -83,7 +92,8 @@ ion-item::part(native){
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 40px;
-    box-shadow: 2px, 2px, 1px, black;
+    max-width: 70%;
+    height: fit-content;
 }
 
 .derecha .burbuja{
@@ -93,4 +103,6 @@ ion-item::part(native){
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 40px;
+    max-width: 70%;
+    height: fit-content;
 }

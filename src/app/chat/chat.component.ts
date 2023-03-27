@@ -16,6 +16,7 @@ export class ChatComponent implements OnInit {
   mensajes: Array<Mensaje> = [];
   mensajeInput = new FormControl('');
   data: Array<Mensaje> = [];
+  lastdata: Array<Mensaje> = [];
   index = 0;
   user = localStorage.getItem("user")!.toString().replace(/['"]+/g, '');
   location = '';
@@ -26,27 +27,24 @@ export class ChatComponent implements OnInit {
     Geolocation.getCurrentPosition().then(res => {
       this.location = res.coords.latitude.toFixed(4).toString()+', '+res.coords.longitude.toFixed(4).toString();
     });
-    this.servicioMensajes.getMensajes().subscribe(m => {
-      this.mensajes = m
-      this.loadMensaje();
-    })
+    this.getMensajes();
    }
 
   ngOnInit() {}
 
   loadMensaje()
   {
+    this.data = [];
+
     let idLastMessage = this.mensajes.length - this.index - 10;
-    let idFirstMessage = this.mensajes.length-1 - this.index;
+    // let idFirstMessage = this.mensajes.length-1 - this.index;
 
-    if(idFirstMessage < 0)
-    {
-      idFirstMessage = 0;
-      console.log(idFirstMessage)
-      console.log(idLastMessage)
-    }
+    // if(idFirstMessage < 0)
+    // {
+    //   idFirstMessage = 0;
+    // }
 
-    for(let i = idFirstMessage; i >= idLastMessage; i--)
+    for(let i = this.mensajes.length-1; i >= idLastMessage; i--)
     {
       if(this.mensajes[i] != null)
         this.data.push(this.mensajes[i])
@@ -69,8 +67,8 @@ export class ChatComponent implements OnInit {
       mensaje
     );
 
-    this.mensajes.push(mensaje);
-    this.data.unshift(mensaje);
+    this.getMensajes();
+
     this.mensajeInput.setValue('');
   }
 
@@ -96,5 +94,14 @@ export class ChatComponent implements OnInit {
     this.authS.logout();
   }
 
-}
+  getMensajes() {
+    this.mensajes = [];
 
+    this.servicioMensajes.getMensajes().subscribe(m => {
+      this.mensajes = m
+      this.loadMensaje();
+      console.log(this.data)
+    })
+  }
+
+}
